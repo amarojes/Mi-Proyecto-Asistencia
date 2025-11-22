@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+  <project_info>
+      <project_number>175211025016</project_number>
+          <project_id>appasistenciasdeestudiantes</project_id>
+              <storage_bucket>appasistenciasdeestudiantes.firebasestorage.app</storage_bucket>
+                </project_info>
+                  <client array="true">
+                      <client_info>
+                            <mobilesdk_app_id>1:175211025016:android:5b14210e09fd5eba5d938d</mobilesdk_app_id>
+                                  <android_client_info>
+                                          <package_name>com.asistenciasapp</package_name>
+                                                </android_client_info>
+                                                    </client_info>
+                                                        <oauth_client empty-array="true"></oauth_client>
+                                                            <api_key array="true">
+                                                                  <current_key>AIzaSyAwo7tPm2jBfnHUkUDvL4ugQE6ef2emcAU</current_key>
+                                                                      </api_key>
+                                                                          <services>
+                                                                                <appinvite_service>
+                                                                                        <other_platform_oauth_client empty-array="true"></other_platform_oauth_client>
+                                                                                              </appinvite_service>
+                                                                                                  </services>
+                                                                                                    </client>
+                                                                                                      <configuration_version>1</configuration_version>
+                                                                                                      </root>

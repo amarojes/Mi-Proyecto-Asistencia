@@ -1,53 +1,48 @@
-# To learn more about how to use Nix to configure your environment
-# see: https://developers.google.com/idx/guides/customize-idx-env
 { pkgs, ... }: {
-  # Which nixpkgs channel to use.
-  channel = "stable-24.05"; # or "unstable"
-  # Use https://search.nixos.org/packages to find packages
+  # Use the stable-24.05 channel for Nix packages to ensure reproducibility.
+  channel = "stable-24.05";
+
+  # Install necessary packages for the development environment.
+  # nodejs_22 is used to satisfy the project's dependency requirements.
   packages = [
-    # pkgs.go
-    # pkgs.python311
-    # pkgs.python311Packages.pip
-    # pkgs.nodejs_20
-    # pkgs.nodePackages.nodemon
+    pkgs.nodejs_22  # Updated from nodejs_20
+    pkgs.unzip
+    pkgs.gcc
+    pkgs.gnumake
+    pkgs.zip
   ];
-  # Sets environment variables in the workspace
+
+  # Environment variables can be defined here if needed.
   env = {};
+
+  # Configuration for the IDX workspace.
   idx = {
-    # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
+    # Recommended VS Code extensions.
     extensions = [
-      # "vscodevim.vim"
       "google.gemini-cli-vscode-ide-companion"
+      "dbaeumer.vscode-eslint" # Good for any JS project
+      "expo.vscode-expo-tools" # Specific for Expo
     ];
-    # Enable previews
+
+    # Configure the web preview for the application.
     previews = {
-      enable = true;
+      enable = true; # Enable the preview
       previews = {
-        # web = {
-        #   # Example: run "npm run dev" with PORT set to IDX's defined port for previews,
-        #   # and show it in IDX's web preview panel
-        #   command = ["npm" "run" "dev"];
-        #   manager = "web";
-        #   env = {
-        #     # Environment variables to set for your server
-        #     PORT = "$PORT";
-        #   };
-        # };
+        web = {
+          # Command to start the Expo web development server.
+          # It runs inside the 'app' directory.
+          command = ["sh" "-c" "cd app && npx expo start --web --port $PORT"];
+          manager = "web";
+        };
       };
     };
-    # Workspace lifecycle hooks
+
+    # Workspace lifecycle hooks.
     workspace = {
-      # Runs when a workspace is first created
+      # Commands to run when the workspace is first created.
       onCreate = {
-        # Example: install JS dependencies from NPM
-        # npm-install = "npm install";
-        # Open editors for the following files by default, if they exist:
-        default.openFiles = [ ".idx/dev.nix" "README.md" ];
-      };
-      # Runs when the workspace is (re)started
-      onStart = {
-        # Example: start a background task to watch and re-build backend code
-        # watch-backend = "npm run watch-backend";
+        # Install npm dependencies inside the 'app' directory.
+        npm-install = "cd app && npm install";
       };
     };
   };
