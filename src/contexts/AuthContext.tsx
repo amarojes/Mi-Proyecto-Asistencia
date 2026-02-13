@@ -5,9 +5,16 @@ import {
   onAuthStateChanged, 
   signInWithEmailAndPassword, 
   signOut, 
-  User 
+  User as FirebaseUser
 } from 'firebase/auth';
 import { auth } from '../firebase/firebaseConfig'; // Importa la instancia de auth
+
+// Extendemos la interfaz User de Firebase para incluir nuestros campos personalizados
+export interface User extends FirebaseUser {
+    rol?: string;
+    grado?: string;
+    seccion?: string;
+}
 
 // Tipado para el valor del contexto
 interface AuthContextType {
@@ -28,7 +35,10 @@ export const AuthProvider: React.FC<{children: React.ReactNode}> = ({ children }
   useEffect(() => {
     // onAuthStateChanged devuelve una función para desuscribirse
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      // Casteamos a nuestro tipo User (en una app real obtendríamos estos datos de la DB)
+      // Por ahora, asumimos que se pueden adjuntar o vienen en el objeto (aunque en Firebase auth puro no vienen,
+      // se necesitaría una llamada extra a Firestore o DB local. Para silenciar TS, casteamos).
+      setUser(currentUser as User);
       setLoading(false);
     });
 
